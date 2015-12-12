@@ -1,3 +1,6 @@
+# c9-scripts
+export PATH="$PATH:$HOME/c9-scripts"
+
 # Google AppEngine/Go
 export PATH="$PATH:$HOME/appengine_go"
 export PATH="$PATH:$HOME/c9-scripts/appengine_go"
