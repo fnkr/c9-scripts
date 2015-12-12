@@ -1,2 +1,4 @@
-#!/bin/sh
+#!/bin/bash
+. "$( cd "$( dirname "${BASH_SOURCE[0]}" )" && cd .. && pwd )/autoexec" || exit 1
+
 goapp serve --host="0.0.0.0" "$@"

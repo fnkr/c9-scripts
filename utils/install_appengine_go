@@ -1,0 +1,32 @@
+#!/bin/bash
+. "$( cd "$( dirname "${BASH_SOURCE[0]}" )" && cd .. && pwd )/autoexec" || exit 1
+
+if [ -e "$HOME/appengine_go" ]; then
+    echo "$FNKR_C9_NAME: install_appengine_go: error: already installed. remove ~/appengine_go to reinstall."
+    exit 1
+fi
+
+echo "url to go_appengine_sdk_linux_amd64-x.x.xx.zip: "
+read SDK_URL
+
+SDK_ZIP="/tmp/$(cat /dev/urandom | tr -dc 'a-zA-Z0-9' | head -c 8)"
+
+if ! wget -O "$SDK_ZIP" "$SDK_URL"; then
+    echo "$FNKR_C9_NAME: install_appengine_go: error: could not download sdk. invalid url?"
+    exit 1
+fi
+
+if ! unzip "$SDK_ZIP" -d "$HOME"; then
+    echo "$FNKR_C9_NAME: install_appengine_go: error: could not extract sdk."
+    exit 1
+fi
+
+if ! mv "$HOME/go_appengine" "$HOME/appengine_go"; then
+    echo "$FNKR_C9_NAME: install_appengine_go: error: could not rename ~/go_appengine to ~/appengine_go."
+    exit 1
+fi
+
+if ! rm "$SDK_ZIP"; then
+    echo "$FNKR_C9_NAME: install_appengine_go: error: could not remove appengine sdk zip ($SDK_ZIP)."
+    exit 1
+fi

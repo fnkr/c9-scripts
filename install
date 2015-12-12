@@ -1,11 +1,18 @@
-#!/bin/sh
-BASHRC_FILEPATH="$HOME/.bashrc"
-BASHRC_EXTENSION='source "$HOME/c9-scripts/autoexec"'
+#!/bin/bash
+. "$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )/autoexec" || exit 1
 
-if grep -r "$BASHRC_EXTENSION" "$BASHRC_FILEPATH" > /dev/null; then
-    echo "fnkr/c9-scripts: install: error: already installed. aborting."
+EXTENSION=". \"$FNKR_C9_LIBRARY/autoexec\""
+
+BASHRC_FILEPATH="$HOME/.bashrc"
+if grep -r "$EXTENSION" "$BASHRC_FILEPATH" > /dev/null; then
+    echo "$FNKR_C9_NAME: install: error: ~/.bashrc extension already installed. skipping."
 else
-    echo "$BASHRC_EXTENSION" >> "$HOME/.bashrc"
+    echo "$EXTENSION" >> "$BASHRC_FILEPATH"
 fi
 
-exit 0
+PROFILE_FILEPATH="$HOME/.profile"
+if grep -r "$EXTENSION" "$PROFILE_FILEPATH" > /dev/null; then
+    echo "$FNKR_C9_NAME: install: error: ~/.profile extension already installed. skipping."
+else
+    echo "$EXTENSION" >> "$PROFILE_FILEPATH"
+fi
