@@ -1,0 +1,11 @@
+#!/bin/sh
+BASHRC_FILEPATH="$HOME/.bashrc"
+BASHRC_EXTENSION='source "$HOME/c9-scripts/autoexec"'
+
+if grep -r "$BASHRC_EXTENSION" "$BASHRC_FILEPATH" > /dev/null; then
+    echo "fnkr/c9-scripts: install: error: already installed. aborting."
+else
+    echo "$BASHRC_EXTENSION" >> "$HOME/.bashrc"
+fi
+
+exit 0
