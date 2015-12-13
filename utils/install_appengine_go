@@ -6,27 +6,44 @@ if [ -e "$HOME/appengine_go" ]; then
     exit 1
 fi
 
-echo "url to go_appengine_sdk_linux_amd64-x.x.xx.zip: "
-read SDK_URL
+SDK_URL='https://storage.googleapis.com/appengine-sdks/featured/go_appengine_sdk_linux_amd64-1.9.30.zip'
 
-SDK_ZIP="/tmp/$(cat /dev/urandom | tr -dc 'a-zA-Z0-9' | head -c 8)"
+if ! SDK_ZIP="/tmp/$(cat /dev/urandom | tr -dc 'a-zA-Z0-9' | head -c 8)"; then
+    echo "$FNKR_C9_NAME: install_appengine_go: error: could not generate random string."
+    exit 1
+fi
+
+if ! SDK_UNP="/tmp/$(cat /dev/urandom | tr -dc 'a-zA-Z0-9' | head -c 8)"; then
+    echo "$FNKR_C9_NAME: install_appengine_go: error: could not generate random string."
+    exit 1
+fi
 
 if ! wget -O "$SDK_ZIP" "$SDK_URL"; then
     echo "$FNKR_C9_NAME: install_appengine_go: error: could not download sdk. invalid url?"
     exit 1
 fi
 
-if ! unzip "$SDK_ZIP" -d "$HOME"; then
+if ! mkdir "$SDK_UNP"; then
+    echo "$FNKR_C9_NAME: install_appengine_python_php: error: could not create temporary directory."
+    exit 1
+fi
+
+if ! unzip "$SDK_ZIP" -d "$SDK_UNP"; then
     echo "$FNKR_C9_NAME: install_appengine_go: error: could not extract sdk."
     exit 1
 fi
 
-if ! mv "$HOME/go_appengine" "$HOME/appengine_go"; then
-    echo "$FNKR_C9_NAME: install_appengine_go: error: could not rename ~/go_appengine to ~/appengine_go."
+if ! mv "$SDK_UNP/go_appengine" "$HOME/appengine_go"; then
+    echo "$FNKR_C9_NAME: install_appengine_go: error: could not rename $SDK_UNP/go_appengine to ~/appengine_go."
     exit 1
 fi
 
 if ! rm "$SDK_ZIP"; then
     echo "$FNKR_C9_NAME: install_appengine_go: error: could not remove appengine sdk zip ($SDK_ZIP)."
+    exit 1
+fi
+
+if ! rm -rf "$SDK_UNP"; then
+    echo "$FNKR_C9_NAME: install_appengine_go: error: could not remove appengine sdk tmp dir ($SDK_UNP)."
     exit 1
 fi
