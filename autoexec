@@ -14,7 +14,6 @@ if [ -z "$FNKR_C9_AUTOEXEC" ]; then
     # AppEngine Python & PHP
     if [ -d "$HOME/appengine_python_php" ]; then
         export PATH="$PATH:$HOME/appengine_python_php"
-        export PATH="$PATH:$FNKR_C9_LIBRARY/appengine_python_php"
     fi
 
     # s3cmd
