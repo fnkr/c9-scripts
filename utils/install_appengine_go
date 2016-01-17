@@ -24,7 +24,7 @@ if ! wget -O "$SDK_ZIP" "$SDK_URL"; then
 fi
 
 if ! mkdir "$SDK_UNP"; then
-    echo "$FNKR_C9_NAME: install_appengine_python_php: error: could not create temporary directory."
+    echo "$FNKR_C9_NAME: install_appengine_go: error: could not create temporary directory."
     exit 1
 fi
 
