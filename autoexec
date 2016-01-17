@@ -1,29 +1,28 @@
 #!/bin/bash
-# remove c9-scripts autoexec hook from ~/.profile
-sed -i '\,^\. "'"$FNKR_C9_LIBRARY"'/autoexec"$,d' "$HOME/.profile"
-
 if [ -z "$FNKR_C9_AUTOEXEC" ]; then
-    # fnkr/c9-scripts
     export FNKR_C9_NAME="fnkr/c9-scripts"
     export FNKR_C9_LIBRARY="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+
     export PATH="$PATH:$FNKR_C9_LIBRARY/utils"
 
-    # AppEngine Go
-    if [ -d "$HOME/appengine_go" ]; then
-        export PATH="$PATH:$HOME/appengine_go"
-        export PATH="$PATH:$FNKR_C9_LIBRARY/appengine_go"
-    fi
-
-    # AppEngine Python & PHP
-    if [ -d "$HOME/appengine_python_php" ]; then
-        export PATH="$PATH:$HOME/appengine_python_php"
-    fi
-
-    # s3cmd
-    if [ -d "$HOME/s3cmd" ]; then
-        export PATH="$PATH:$HOME/s3cmd"
-    fi
-
-    # fnkr/c9-scripts
     export FNKR_C9_AUTOEXEC="true"
+fi
+
+# Functions
+pathContainsDirectory() { if [[ ":$PATH:" == *":$1:"* ]]; then return 0; else return 1; fi }
+
+# AppEngine Go
+if [ -d "$HOME/appengine_go" ] && ! pathContainsDirectory "$HOME/appengine_go"; then
+    export PATH="$PATH:$HOME/appengine_go"
+    export PATH="$PATH:$FNKR_C9_LIBRARY/appengine_go"
+fi
+
+# AppEngine Python & PHP
+if [ -d "$HOME/appengine_python_php" ] && ! pathContainsDirectory "$HOME/appengine_python_php"; then
+    export PATH="$PATH:$HOME/appengine_python_php"
+fi
+
+# s3cmd
+if [ -d "$HOME/s3cmd" ] && ! pathContainsDirectory "$HOME/s3cmd"; then
+    export PATH="$PATH:$HOME/s3cmd"
 fi
