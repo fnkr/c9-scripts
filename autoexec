@@ -1,4 +1,7 @@
 #!/bin/bash
+# remove c9-scripts autoexec hook from ~/.profile
+sed -i '\,^\. "'"$FNKR_C9_LIBRARY"'/autoexec"$,d' "$HOME/.profile"
+
 if [ -z "$FNKR_C9_AUTOEXEC" ]; then
     # fnkr/c9-scripts
     export FNKR_C9_NAME="fnkr/c9-scripts"

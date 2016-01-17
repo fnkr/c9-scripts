@@ -11,14 +11,6 @@ else
     INSTALLED=1
 fi
 
-PROFILE_FILEPATH="$HOME/.profile"
-if grep -r "^$EXTENSION$" "$PROFILE_FILEPATH" > /dev/null; then
-    echo "$FNKR_C9_NAME: install: error: ~/.profile extension already installed. skipping."
-else
-    echo "$EXTENSION" >> "$PROFILE_FILEPATH"
-    INSTALLED=1
-fi
-
 if ! [ -z "$INSTALLED" ]; then
     printf "Installation finished.\nRun \"source \"$FNKR_C9_LIBRARY/autoexec\"\" or start a new terminal.\n"
 fi
