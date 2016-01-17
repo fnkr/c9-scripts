@@ -17,6 +17,11 @@ if [ -z "$FNKR_C9_AUTOEXEC" ]; then
         export PATH="$PATH:$FNKR_C9_LIBRARY/appengine_python_php"
     fi
 
+    # s3cmd
+    if [ -d "$HOME/s3cmd" ]; then
+        export PATH="$PATH:$HOME/s3cmd"
+    fi
+
     # fnkr/c9-scripts
     export FNKR_C9_AUTOEXEC="true"
 fi

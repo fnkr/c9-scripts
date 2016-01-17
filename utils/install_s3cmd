@@ -1,0 +1,49 @@
+#!/bin/bash
+. "$( cd "$( dirname "${BASH_SOURCE[0]}" )" && cd .. && pwd )/autoexec" || exit 1
+
+if [ -e "$HOME/s3cmd" ]; then
+    echo "$FNKR_C9_NAME: install_s3cmd: error: already installed. remove ~/s3cmd to reinstall."
+    exit 1
+fi
+
+S3CMD_URL='http://downloads.sourceforge.net/project/s3tools/s3cmd/1.6.0/s3cmd-1.6.0.zip'
+
+if ! S3CMD_ZIP="/tmp/$(cat /dev/urandom | tr -dc 'a-zA-Z0-9' | head -c 8)"; then
+    echo "$FNKR_C9_NAME: install_s3cmd: error: could not generate random string."
+    exit 1
+fi
+
+if ! S3CMD_UNP="/tmp/$(cat /dev/urandom | tr -dc 'a-zA-Z0-9' | head -c 8)"; then
+    echo "$FNKR_C9_NAME: install_s3cmd: error: could not generate random string."
+    exit 1
+fi
+
+if ! wget -O "$S3CMD_ZIP" "$S3CMD_URL"; then
+    echo "$FNKR_C9_NAME: install_s3cmd: error: could not download s3cmd. invalid url?"
+    exit 1
+fi
+
+if ! mkdir "$S3CMD_UNP"; then
+    echo "$FNKR_C9_NAME: install_s3cmd: error: could not create temporary directory."
+    exit 1
+fi
+
+if ! unzip "$S3CMD_ZIP" -d "$S3CMD_UNP"; then
+    echo "$FNKR_C9_NAME: install_s3cmd: error: could not extract s3cmd."
+    exit 1
+fi
+
+if ! mv "$S3CMD_UNP"/s3cmd-* "$HOME/s3cmd"; then
+    echo "$FNKR_C9_NAME: install_s3cmd: error: could not rename $S3CMD_UNP/s3cmd-* to ~/s3cmd."
+    exit 1
+fi
+
+if ! rm "$S3CMD_ZIP"; then
+    echo "$FNKR_C9_NAME: install_s3cmd: error: could not remove s3cmd zip ($S3CMD_ZIP)."
+    exit 1
+fi
+
+if ! rm -rf "$S3CMD_UNP"; then
+    echo "$FNKR_C9_NAME: install_s3cmd: error: could not remove s3cmd tmp dir ($S3CMD_UNP)."
+    exit 1
+fi
