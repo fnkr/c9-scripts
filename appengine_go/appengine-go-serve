@@ -1,14 +1,14 @@
 #!/bin/bash
 . "$( cd "$( dirname "${BASH_SOURCE[0]}" )" && cd .. && pwd )/autoexec" || exit 1
 
-if dev_appserver="$(which -a dev_appserver.py | grep /appengine_go/)"; then
+if dev_appserver="$(which -a dev_appserver.py | grep '/appengine_go/')"; then
     "$dev_appserver" \
         --host="$C9_IP" \
         --port="$C9_PORT" \
         --admin_host="$C9_IP" \
         --admin_port="$((C9_PORT+=1))" \
         --skip_sdk_update_check="yes" \
-        "$@" . 2>&1 | sed -e "s|http://0.0.0.0:|https://$C9_HOSTNAME:|"
+        "$@" . 2>&1 | sed -e "s|http://0.0.0.0:|https://$C9_HOSTNAME:|" -e "s|$C9_HOSTNAME:8080|$C9_HOSTNAME|"
 else
     echo "$FNKR_C9_NAME: appengine-go-serve: could not find Go AppEngine SDK"
     exit 1
