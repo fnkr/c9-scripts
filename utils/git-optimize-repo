@@ -1,0 +1,11 @@
+#!/bin/bash
+. "$( cd "$( dirname "${BASH_SOURCE[0]}" )" && cd .. && pwd )/autoexec" || exit 1
+
+git gc --prune=now && \
+git submodule foreach git gc --prune=now && \
+
+git repack -adf --depth=250 --window=250 && \
+git submodule foreach git repack -adf --depth=250 --window=250 && \
+
+git prune && \
+git submodule foreach git prune
