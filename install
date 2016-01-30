@@ -27,6 +27,13 @@ else
     echo "$FNKR_C9_NAME: install: error: ~/.gitconfig git.fnkr.net extension already installed. skipping."
 fi
 
+EXT='git.fnkr.net,185.26.156.24,2a00:d0c0:200:0:b9:1a:9c18:26a ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIH1fbdUyIjC54eK2HPDM9GSyklhTTgCtgJWEU39P9B8A'
+if ! grep "^$EXT$" ~/.ssh/known_hosts > /dev/null; then
+    echo "$EXT" >> ~/.ssh/known_hosts
+else
+    echo "$FNKR_C9_NAME: install: error: ~/.ssh/known_hosts git.fnkr.net extension already installed. skipping."
+fi
+
 if ! [ -z "$INSTALLED" ]; then
     printf "Installation finished.\nRun \"source \"$FNKR_C9_LIBRARY/autoexec\"\" or start a new terminal.\n"
 fi
