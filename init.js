@@ -86,20 +86,6 @@
 
         self.doInstall(self);
     },
-    doInstall: function(self) {
-        self.console.log(self, 'doInstall');
-
-        services.proc.execFile('bash', { 
-            args: ['./install'], cwd: self.git.getClone()
-        }, (err) => self.doInstallCallback(self, err));
-    },
-    doInstallCallback: function(self, err) {
-        self.console.log(self, 'doInstallCallback');
-
-        if (err) {
-            return self.onError(self, err);
-        }
-    },
     doUpgrade: function(self) {
         self.console.log(self, 'doUpgrade');
 
@@ -109,6 +95,22 @@
     },
     doUpgradeCallback: function(self, err) {
         self.console.log(self, 'doUpgradeCallback');
+
+        if (err) {
+            return self.onError(self, err);
+        }
+
+        self.doInstall(self);
+    },
+    doInstall: function(self) {
+        self.console.log(self, 'doInstall');
+
+        services.proc.execFile('bash', {
+            args: ['./install'], cwd: self.git.getClone()
+        }, (err) => self.doInstallCallback(self, err));
+    },
+    doInstallCallback: function(self, err) {
+        self.console.log(self, 'doInstallCallback');
 
         if (err) {
             return self.onError(self, err);
