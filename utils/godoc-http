@@ -1,6 +1,14 @@
 #!/bin/bash
 . "$( cd "$( dirname "${BASH_SOURCE[0]}" )" && cd .. && pwd )/autoexec" || exit 1
 
+# find free port
 PORT="$(find-free-port)" || exit 1
+
+# print url
 echo "$FNKR_C9_NAME: godoc-http: info: godoc serves on https://$C9_HOSTNAME:$PORT"
-godoc -http="$IP:$PORT" -play "$@"
+
+# run godoc
+godoc -http="$IP:$PORT" \
+      -play \
+      "$@" \
+      || exit 1
