@@ -4,6 +4,13 @@
 # https://docs.c9.io/docs/multiple-ports
 declare -a PORTS=(8082 8081 8080)
 
+if [ "$1" = "-a" ]; then
+    for PORT in "${PORTS[@]}"; do
+        echo "$PORT"
+    done
+    exit 0
+fi
+
 for PORT in "${PORTS[@]}"; do
     if ! nc "127.0.0.1" "$PORT" < /dev/null; then
         echo "$PORT"
