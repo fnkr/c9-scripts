@@ -1,0 +1,15 @@
+#!/bin/bash
+. "$( cd "$( dirname "${BASH_SOURCE[0]}" )" && cd .. && pwd )/autoexec" || exit 1
+
+# https://docs.c9.io/docs/multiple-ports
+declare -a PORTS=(8082 8081 8080)
+
+for PORT in "${PORTS[@]}"; do
+    if ! nc "127.0.0.1" "$PORT" < /dev/null; then
+        echo "$PORT"
+        exit 0
+    fi
+done
+
+echo "$FNKR_C9_NAME: find-free-port: error: no free port available!" >&2
+exit 1
