@@ -1,6 +1,21 @@
 #!/bin/bash
 . "$( cd "$( dirname "${BASH_SOURCE[0]}" )" && cd .. && pwd )/autoexec" || exit 1
 
-sudo sed 's/8080/8081/' -i /etc/apache2/ports.conf && \
-sudo sed 's/8080/8081/' -i /etc/apache2/sites-available/001-cloud9.conf && \
-phpmyadmin-ctl install | sed 's/.c9users.io/.c9users.io:8081/'
+# run as root
+if [ "$UID" != "0" ]; then
+    sudo -E "$0" "$@"
+    exit
+fi
+
+# stop apache2
+service apache2 stop || exit 1
+
+# find free port
+PORT="$(find-free-port)" || exit 1
+
+# update apache2 config
+find-free-port -a | while read port; do sed "s/$port/$PORT/" -i /etc/apache2/ports.conf; done || exit 1
+find-free-port -a | while read port; do sed "s/$port/$PORT/" -i /etc/apache2/sites-available/001-cloud9.conf; done || exit 1
+
+# install phpmyadmin, restart apache2
+phpmyadmin-ctl install | sed "s/.c9users.io/.c9users.io:$PORT/" || exit 1
