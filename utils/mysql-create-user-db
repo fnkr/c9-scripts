@@ -1,0 +1,24 @@
+#!/bin/bash
+. "$( cd "$( dirname "${BASH_SOURCE[0]}" )" && cd .. && pwd )/autoexec" || exit 1
+
+# gather information
+echo -n "Username: "
+read MYSQL_USER
+
+echo -n "Password: "
+read MYSQL_PASS
+
+echo -n "Database: "
+read MYSQL_DB
+
+# create user
+mysql -u root -e "CREATE USER '$MYSQL_USER'@'localhost' IDENTIFIED BY '$MYSQL_PASS';"
+
+# create database
+mysql -u root -e "CREATE DATABASE \`$MYSQL_DB\`;"
+
+# add user to database
+mysql -u root -e "GRANT ALL PRIVILEGES ON \`$MYSQL_DB\`.* to '$MYSQL_USER';"
+
+# flush privileges
+mysql -u root -e "FLUSH PRIVILEGES;"

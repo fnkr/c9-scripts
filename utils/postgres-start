@@ -1,0 +1,17 @@
+#!/bin/bash
+. "$( cd "$( dirname "${BASH_SOURCE[0]}" )" && cd .. && pwd )/autoexec" || exit 1
+
+# run as root
+if [ "$UID" != "0" ]; then
+    sudo -E "$0" "$@"
+    exit
+fi
+
+# password authentication for all local users, except postgres
+pg_hba_conf="/etc/postgresql/*/main/pg_hba.conf"
+echo 'local all postgres peer' > $pg_hba_conf
+echo 'local all all password' >> $pg_hba_conf
+echo 'host all all 127.0.0.1/32 password' >> $pg_hba_conf
+
+# start postgres
+service postgresql start

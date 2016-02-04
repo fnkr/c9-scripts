@@ -1,0 +1,27 @@
+#!/bin/bash
+. "$( cd "$( dirname "${BASH_SOURCE[0]}" )" && cd .. && pwd )/autoexec" || exit 1
+
+# run as postgres
+if [ "$UID" != "$(id -u postgres)" ]; then
+    sudo -E sudo -u postgres -E "$0" "$@"
+    exit
+fi
+
+# gather information
+echo -n "Username: "
+read PG_USER
+
+echo -n "Password: "
+read PG_PASS
+
+echo -n "Database: "
+read PG_DB
+
+# create user
+psql -c "CREATE USER \"$PG_USER\" WITH PASSWORD '$PG_PASS';"
+
+# create database
+psql -c "CREATE DATABASE \"$PG_DB\";"
+
+# add user to database
+psql -c "GRANT ALL PRIVILEGES ON DATABASE \"$PG_DB\" to \"$PG_USER\";"
