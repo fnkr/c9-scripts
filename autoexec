@@ -11,6 +11,11 @@ fi
 # Functions
 pathContainsDirectory() { if [[ ":$PATH:" == *":$1:"* ]]; then return 0; else return 1; fi }
 
+# ~/workspace/bin
+if [ -d "$HOME/workspace/bin" ] && ! pathContainsDirectory "$HOME/workspace/bin"; then
+    export PATH="$PATH:$HOME/workspace/bin"
+fi
+
 # AppEngine Go
 if [ -d "$HOME/appengine_go" ] && ! pathContainsDirectory "$HOME/appengine_go"; then
     export PATH="$PATH:$HOME/appengine_go"
