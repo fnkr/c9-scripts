@@ -17,11 +17,23 @@ read PG_PASS
 echo -n "Database: "
 read PG_DB
 
+echo -n "Encoding [UTF-8]: "
+read PG_ENCODING
+if [ -z "$PG_ENCODNG" ]; then
+    PG_ENCODING="UTF-8"
+fi
+
+echo -n "Template [template0]: "
+read PG_TEMPLATE
+if [ -z "$PG_TEMPLATE" ]; then
+    PG_TEMPLATE="template0"
+fi
+
 # create user
 psql -c "CREATE USER \"$PG_USER\" WITH PASSWORD '$PG_PASS';"
 
 # create database
-psql -c "CREATE DATABASE \"$PG_DB\";"
+psql -c "CREATE DATABASE \"$PG_DB\" WITH ENCODING='$PG_ENCODING' OWNER=\"$PG_USER\" TEMPLATE \"$PG_TEMPLATE\";"
 
 # add user to database
 psql -c "GRANT ALL PRIVILEGES ON DATABASE \"$PG_DB\" to \"$PG_USER\";"
