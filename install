@@ -20,13 +20,6 @@ else
 fi
 
 
-if [ -z "$(git config --global 'url.ssh@git.fnkr.net:.insteadOf')" ]; then
-    git config --global 'url.ssh@git.fnkr.net:.insteadOf' 'https://git.fnkr.net/'
-    INSTALLED=1
-else
-    echo "$FNKR_C9_NAME: install: error: ~/.gitconfig git.fnkr.net extension already installed. skipping."
-fi
-
 if ! [ -z "$INSTALLED" ]; then
     printf "Installation finished.\nRun \"source \"$FNKR_C9_LIBRARY/autoexec\"\" or start a new terminal.\n"
 fi
