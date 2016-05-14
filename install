@@ -20,6 +20,13 @@ else
 fi
 
 
+if [ -z "$(git config --global 'url.git@github.com:.insteadOf')" ]; then
+    git config --global 'url.git@github.com:.insteadOf' 'https://github.com/'
+    INSTALLED=1
+else
+    echo "$FNKR_C9_NAME: install: error: ~/.gitconfig github.com extension already installed. skipping."
+fi
+
 if ! [ -z "$INSTALLED" ]; then
     printf "Installation finished.\nRun \"source \"$FNKR_C9_LIBRARY/autoexec\"\" or start a new terminal.\n"
 fi
