@@ -5,7 +5,7 @@ EXTENSION=". \"$FNKR_C9_LIBRARY/autoexec\""
 
 BASHRC_FILEPATH="$HOME/.bashrc"
 if grep -r "^$EXTENSION$" "$BASHRC_FILEPATH" > /dev/null; then
-    echo "$FNKR_C9_NAME: install: error: ~/.bashrc extension already installed. skipping."
+    echo "$FNKR_C9_NAME: install: info: ~/.bashrc extension already installed. skipping."
 else
     echo "$EXTENSION" >> "$BASHRC_FILEPATH"
     INSTALLED=1
@@ -13,7 +13,7 @@ fi
 
 PROFILE_FILEPATH="$HOME/.profile"
 if grep -r "^$EXTENSION$" "$PROFILE_FILEPATH" > /dev/null; then
-    echo "$FNKR_C9_NAME: install: error: ~/.profile extension already installed. skipping."
+    echo "$FNKR_C9_NAME: install: info: ~/.profile extension already installed. skipping."
 else
     echo "$EXTENSION" >> "$PROFILE_FILEPATH"
     INSTALLED=1
@@ -24,7 +24,7 @@ if [ -z "$(git config --global 'url.git@github.com:.insteadOf')" ]; then
     git config --global 'url.git@github.com:.insteadOf' 'https://github.com/'
     INSTALLED=1
 else
-    echo "$FNKR_C9_NAME: install: error: ~/.gitconfig github.com extension already installed. skipping."
+    echo "$FNKR_C9_NAME: install: info: ~/.gitconfig github.com extension already installed. skipping."
 fi
 
 if ! [ -z "$INSTALLED" ]; then
