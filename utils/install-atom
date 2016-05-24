@@ -14,4 +14,4 @@ add-apt-repository -y ppa:webupd8team/atom || exit 1
 apt-get update || exit 1
 
 # install atom
-apt-get install atom || exit 1
+apt-get -y install atom || exit 1
