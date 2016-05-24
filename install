@@ -19,6 +19,12 @@ else
     INSTALLED=1
 fi
 
+if diff "$FNKR_C9_LIBRARY/assets/gitignore" "$HOME/.gitignore" > /dev/null; then
+    echo "$FNKR_C9_NAME: install: info: ~/.gitignore replacement already installed. skipping."
+else
+    cp "$FNKR_C9_LIBRARY/assets/gitignore" "$HOME/.gitignore"
+    INSTALLED=1
+fi
 
 if [ -z "$(git config --global 'url.git@github.com:.insteadOf')" ]; then
     git config --global 'url.git@github.com:.insteadOf' 'https://github.com/'
