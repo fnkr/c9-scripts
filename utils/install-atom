@@ -1,0 +1,17 @@
+#!/bin/bash
+. "$( cd "$( dirname "${BASH_SOURCE[0]}" )" && cd .. && pwd )/autoexec" || exit 1
+
+# run as root
+if [ "$UID" != "0" ]; then
+    sudo -E "$0" "$@"
+    exit
+fi
+
+# add atom repository
+add-apt-repository -y ppa:webupd8team/atom || exit 1
+
+# update package cache
+apt-get update || exit 1
+
+# install atom
+apt-get install atom || exit 1
