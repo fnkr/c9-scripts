@@ -1,0 +1,12 @@
+#!/bin/bash
+. "$( cd "$( dirname "${BASH_SOURCE[0]}" )" && cd .. && pwd )/autoexec" || exit 1
+
+if appcfg="$(which -a appcfg.py | grep '/appengine_go/')"; then
+    "$appcfg" \
+        --skip_sdk_update_check \
+        --noauth_local_webserver \
+        "$@" update . 2>&1
+else
+    echo "$FNKR_C9_NAME: appengine-go-deploy: could not find Go AppEngine SDK"
+    exit 1
+fi
