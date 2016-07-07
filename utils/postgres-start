@@ -12,6 +12,7 @@ pg_hba_conf="/etc/postgresql/*/main/pg_hba.conf"
 echo 'local all postgres peer' > $pg_hba_conf
 echo 'local all all password' >> $pg_hba_conf
 echo 'host all all 127.0.0.1/32 password' >> $pg_hba_conf
+echo 'host all all ::1/128 password' >> $pg_hba_conf
 
 # start postgres
 service postgresql start
