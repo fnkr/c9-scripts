@@ -11,11 +11,17 @@ read MYSQL_PASS
 echo -n "Database: "
 read MYSQL_DB
 
+echo -n "Collate [utf8_general_ci]: "
+read MYSQL_COLLATE
+if [ -z "$MYSQL_COLLATE" ]; then
+    MYSQL_COLLATE="utf8_general_ci"
+fi
+
 # create user
 mysql -u root -e "CREATE USER '$MYSQL_USER'@'localhost' IDENTIFIED BY '$MYSQL_PASS';"
 
 # create database
-mysql -u root -e "CREATE DATABASE \`$MYSQL_DB\`;"
+mysql -u root -e "CREATE DATABASE \`$MYSQL_DB\` COLLATE '$MYSQL_COLLATE';"
 
 # add user to database
 mysql -u root -e "GRANT ALL PRIVILEGES ON \`$MYSQL_DB\`.* to '$MYSQL_USER';"
