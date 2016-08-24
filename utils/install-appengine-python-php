@@ -6,7 +6,7 @@ if [ -e "$HOME/appengine_python_php" ]; then
     exit 1
 fi
 
-SDK_URL='https://storage.googleapis.com/appengine-sdks/featured/google_appengine_1.9.37.zip'
+SDK_URL='https://storage.googleapis.com/appengine-sdks/featured/google_appengine_1.9.40.zip'
 
 if ! SDK_ZIP="/tmp/$(cat /dev/urandom | tr -dc 'a-zA-Z0-9' | head -c 8)"; then
     echo "$FNKR_C9_NAME: install_appengine_python_php: error: could not generate random string."
