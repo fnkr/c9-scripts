@@ -1,0 +1,12 @@
+#!/bin/bash
+. "$( cd "$( dirname "${BASH_SOURCE[0]}" )" && cd .. && pwd )/autoexec" || exit 1
+
+# run as root
+if [ "$UID" != "0" ]; then
+    sudo -E "$0" "$@"
+    exit
+fi
+
+# c9 preferred way to start mongod. More mongod options here 
+#  (https://docs.mongodb.com/manual/reference/program/mongod/#options).
+mongod --bind_ip=$IP --nojournal --rest "$@"
