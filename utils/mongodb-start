@@ -18,7 +18,6 @@ mongod_data="/var/lib/mongodb"
 # https://docs.mongodb.com/manual/reference/program/mongod/#options
 mongod \
     --fork \
-    --bind_ip="$C9_IP" \
     --logpath="$mongod_log" \
     --dbpath="$mongod_data" \
     --nojournal \
