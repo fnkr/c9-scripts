@@ -1,0 +1,25 @@
+#!/bin/bash
+. "$( cd "$( dirname "${BASH_SOURCE[0]}" )" && cd .. && pwd )/autoexec" || exit 1
+
+# run as root
+if [ "$UID" != "0" ]; then
+    sudo -E "$0" "$@"
+    exit
+fi
+
+# config
+mongod_log="/var/log/mongodb.log"
+mongod_data="/var/lib/mongodb"
+
+# create required directories
+[ -d "$mongod_data" ] || mkdir "$mongod_data" || exit 1
+
+# start mongod
+# https://docs.mongodb.com/manual/reference/program/mongod/#options
+mongod \
+    --fork \
+    --bind_ip="$C9_IP" \
+    --logpath="$mongod_log" \
+    --dbpath="$mongod_data" \
+    --nojournal \
+    "$@"
