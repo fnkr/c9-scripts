@@ -1,0 +1,37 @@
+#!/bin/bash
+. "$( cd "$( dirname "${BASH_SOURCE[0]}" )" && cd .. && pwd )/autoexec" || exit 1
+
+for file in "$@"; do
+    if [ ! -f "$1" ]; then
+        if [ -e "$1" ]; then
+            echo "$FNKR_C9_NAME: c9open: error: path exists, but is not a file: $file" >&2
+            exit 1
+        fi
+        if ! touch "$file"; then
+            echo "$FNKR_C9_NAME: c9open: error: unable to create file: $file" >&2
+            exit 1
+        fi
+    fi
+
+    fileName="$(basename "$file")"
+
+    tempDir="$HOME/workspace/.c9/c9open-$(randomStringAlphaNum)"
+    if ! mkdir "$tempDir"; then
+        echo "$FNKR_C9_NAME: c9open: error: could not create temporary directory: $tempDir" >&2
+        exit 1
+    fi
+    tempFile="$tempDir/$fileName"
+    if ! cp "$file" "$tempFile"; then
+        echo "$FNKR_C9_NAME: c9open: error: could not create temporary file: $tempFile" >&2
+        exit 1
+    fi
+
+    c9 open --wait "$tempFile"
+    
+    if ! mv "$tempFile/d" "$file"; then
+        echo "$FNKR_C9_NAME: c9open: error: failed to copy temporary file back to base file: $tempFile => $file" >&2
+        exit 1
+    fi
+
+    rm -rf "$tempDir" || exit 1
+done
