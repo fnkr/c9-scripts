@@ -11,6 +11,7 @@ fi
 
 # Functions
 pathContainsDirectory() { if [[ ":$PATH:" == *":$1:"* ]]; then return 0; else return 1; fi }
+randomStringAlphaNum() { cat /dev/urandom | tr -dc 'a-zA-Z0-9' | head -c ${1:-32}; }
 
 # ~/workspace/bin
 if [ -d "$HOME/workspace/bin" ] && ! pathContainsDirectory "$HOME/workspace/bin"; then
