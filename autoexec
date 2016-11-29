@@ -6,6 +6,9 @@ if [ -z "$FNKR_C9_AUTOEXEC" ]; then
 
     export PATH="$PATH:$FNKR_C9_LIBRARY/utils"
 
+    # https://unix.stackexchange.com/questions/48381/fixing-scrolling-in-nano-running-in-tmux-in-mate-terminal
+    export TERM=screen
+
     export FNKR_C9_AUTOEXEC="true"
 fi
 
