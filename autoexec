@@ -1,5 +1,5 @@
 #!/bin/bash
-if [ -z "$FNKR_C9_AUTOEXEC" ]; then
+if [ ! "$FNKR_C9_AUTOEXEC" = 2  ]; then
     export FNKR_C9_NAME="fnkr/c9-scripts"
     export FNKR_C9_LIBRARY="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
     export FNKR_C9_WORKSPACE="$HOME/workspace"
@@ -9,7 +9,8 @@ if [ -z "$FNKR_C9_AUTOEXEC" ]; then
     # https://unix.stackexchange.com/questions/48381/fixing-scrolling-in-nano-running-in-tmux-in-mate-terminal
     export TERM=screen
 
-    export FNKR_C9_AUTOEXEC="true"
+    # Increment this number each time you change something inside of this 'if'-block
+    export FNKR_C9_AUTOEXEC=2
 fi
 
 # Functions
